@@ -36,7 +36,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
         invoiceDate: '',
         reverseCharge: 'No',
         items: [{ description: '', unitPrice: '', quantity: '', discount: '', taxRate: 18 }],
-        signature: ''
+        signature: null
     });
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -159,10 +159,11 @@ const InvoiceFormData = ({ onAddInvoice }) => {
     };
 
     return (
-        <Box p={2}>
-            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold' }}>Invoice Form</Typography>
+        <>
+            <Container sx={{backgroundColor:'#fff', marginBlock:'30px',}}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', pt:'20px' }}>Invoice Form</Typography>
             <Container>
-                <Grid container spacing={2} component="form" onSubmit={handleSubmit}>
+                <Grid container spacing={2} component="form" sx={{ml:'0px'}} onSubmit={handleSubmit}>
                     <Grid item xs={12} sx={{ marginBlock: '10px' }}>
                         <Typography variant="h6"  sx={{fontWeight:'bold'}}>Seller Details</Typography>
                     </Grid>
@@ -561,22 +562,29 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                     </Grid>
 
                     {/* Signature */}
-                    <Grid item xs={12} sx={{display:'flex', justifyContent:'end'}}>
-                        {/* <Typography variant="h6" sx={{fontWeight:'bold'}}>Signature:</Typography> */}
-                        <Button variant="contained" component="label" sx={{ mt: 2 }} >
+                
+                    <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+                        {formData.signature ? (
+                            <img src={formData.signature} alt="Signature" style={{ maxWidth: '150px', marginBottom: '16px' }} />
+                        ) : (
+                            <Typography>No Signature</Typography>
+                        )}
+                        
+                        <Button variant="contained" component="label" sx={{ mt: 2 }}>
                             Upload Signature
-                            <input type="file" accept="image/*" hidden onChange={handleFileChange} />
+                            <input type="file" accept="image/*" hidden onChange={handleFileChange} required/>
                         </Button>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Divider />
+                    <Grid item xs={12} sx={{ pb:'20px'}}>
                         <Button variant="contained" color="primary" type="submit" sx={{ display: 'flex', justifySelf: 'flex-end', ml: 'auto', mr: 'auto' }}>
                             Submit Invoice
                         </Button>
                     </Grid>
                 </Grid>
             </Container>
-        </Box>
+            </Container>
+
+        </>
     );
 };
 
