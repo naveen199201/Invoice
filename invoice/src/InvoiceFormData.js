@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
-    TextField, Button, Grid, Typography, Box, Divider, MenuItem, Select, InputLabel, FormControl, Container
+    TextField, Button,  Typography, Box, Divider, MenuItem, Select, InputLabel, FormControl, Container
 } from '@mui/material';
-import Signature from './Signature'; // Placeholder for signature component
+
+import Grid from '@mui/material/Grid2';
 import { useNavigate } from 'react-router-dom';
 
 const InvoiceFormData = ({ onAddInvoice }) => {
@@ -164,11 +165,11 @@ const InvoiceFormData = ({ onAddInvoice }) => {
             <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', pt:'20px' }}>Invoice Form</Typography>
             <Container>
                 <Grid container spacing={2} component="form" sx={{ml:'0px'}} onSubmit={handleSubmit}>
-                    <Grid item xs={12} sx={{ marginBlock: '10px' }}>
+                    <Grid item xs={12} >
                         <Typography variant="h6"  sx={{fontWeight:'bold'}}>Seller Details</Typography>
                     </Grid>
                     <Grid container spacing={2} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Name"
                                 name="sellerName"
@@ -178,7 +179,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Address"
                                 name="sellerAddress"
@@ -188,7 +189,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="City"
                                 name="sellerCity"
@@ -198,7 +199,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="State"
                                 name="sellerState"
@@ -208,7 +209,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="Pincode"
                                 name="sellerPincode"
@@ -220,7 +221,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 inputProps={{ min: 0, maxLength: 6 }} // Optionally restrict length
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="PAN No."
                                 name="sellerPAN"
@@ -230,7 +231,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="GST Registration No."
                                 name="sellerGST"
@@ -242,7 +243,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                         </Grid>
 
                         {/* Place of Supply */}
-                        <Grid item xs={12}>
+                        <Grid item xs={12}  size={12}>
                             <TextField
                                 label="Place of Supply"
                                 name="placeOfSupply"
@@ -257,11 +258,11 @@ const InvoiceFormData = ({ onAddInvoice }) => {
 
                     {/* Billing Details */}
 
-                    <Grid item xs={12} sx={{ marginBlock: '10px' }}>
+                    <Grid item xs={12} >
                         <Typography variant="h6"  sx={{fontWeight:'bold'}}>Billing Details</Typography>
                     </Grid>
                     <Grid container spacing={2} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Name"
                                 name="billingName"
@@ -271,7 +272,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Address"
                                 name="billingAddress"
@@ -281,7 +282,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="City"
                                 name="billingCity"
@@ -291,7 +292,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="State"
                                 name="billingState"
@@ -301,7 +302,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="Pincode"
                                 name="billingPincode"
@@ -311,7 +312,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={12}>
                             <TextField
                                 label="State/UT Code"
                                 name="billingStateCode"
@@ -324,11 +325,11 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                     </Grid>
 
                     {/* Shipping Details */}
-                    <Grid item xs={12} sx={{ marginBlock: '10px' }}>
+                    <Grid item xs={12} >
                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Shipping Details</Typography>
                     </Grid>
                     <Grid container spacing={2} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Name"
                                 name="shippingName"
@@ -338,7 +339,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Address"
                                 name="shippingAddress"
@@ -348,7 +349,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="City"
                                 name="shippingCity"
@@ -358,7 +359,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="State"
                                 name="shippingState"
@@ -368,7 +369,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} size={4}>
                             <TextField
                                 label="Pincode"
                                 name="shippingPincode"
@@ -379,7 +380,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 type='number'
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="State/UT Code"
                                 name="shippingStateCode"
@@ -392,7 +393,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
 
 
                         {/* Place of Delivery */}
-                        <Grid item xs={12}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Place of Delivery"
                                 name="placeOfDelivery"
@@ -405,11 +406,11 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                     </Grid>
 
                     {/* Order Details */}
-                    <Grid item xs={12} sx={{ marginBlock: '10px' }}>
+                    <Grid item xs={12} size={12} >
                         <Typography variant="h6"  sx={{fontWeight:'bold'}}>Order Details</Typography>
                     </Grid>
-                    <Grid container spacing={2} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
-                        <Grid item xs={12} sm={6}>
+                    <Grid container spacing={2}  size={12} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Order No."
                                 name="orderNo"
@@ -419,7 +420,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Order Date"
                                 name="orderDate"
@@ -433,11 +434,11 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                     </Grid>
 
                     {/* Invoice Details */}
-                    <Grid item xs={12} sx={{ marginBlock: '10px' }}>
+                    <Grid item xs={12}  size={12} >
                         <Typography variant="h6"  sx={{fontWeight:'bold'}}>Invoice Details</Typography>
                     </Grid>
-                    <Grid container spacing={2} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
-                        <Grid item xs={12} sm={6}>
+                    <Grid container spacing={2} size={12} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Invoice No."
                                 name="invoiceNo"
@@ -447,7 +448,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} size={6}>
                             <TextField
                                 label="Invoice Date"
                                 name="invoiceDate"
@@ -458,7 +459,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} size={12}>
                             <TextField
                                 label="Invoice Details"
                                 name="invoiceDetails"
@@ -472,7 +473,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
 
 
                         {/* Reverse Charge */}
-                        <Grid item xs={12}>
+                        <Grid item xs={12} size={12}>
                             <FormControl fullWidth>
                                 <InputLabel>Reverse Charge</InputLabel>
                                 <Select
@@ -488,13 +489,13 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                     </Grid>
 
                     {/* Item Details */}
-                    <Grid item xs={12} sx={{ marginBlock: '10px' }}>
+                    <Grid item xs={12} >
                         <Typography variant="h6"  sx={{fontWeight:'bold'}}>Item Details</Typography>
                     </Grid>
                     <Grid container spacing={2} sx={{ border: '1px solid #d3cccc', padding: '5px' }}>
                         {formData.items.map((item, index) => (
                             <React.Fragment key={index}>
-                                <Grid item xs={12} sm={3}>
+                                <Grid item xs={12} size={3}>
                                     <TextField
                                         label="Description"
                                         name="description"
@@ -504,7 +505,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                         required
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={2}>
+                                <Grid item xs={12} size={2}>
                                     <TextField
                                         label="Unit Price"
                                         name="unitPrice"
@@ -516,7 +517,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                         required
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={2}>
+                                <Grid item xs={12} size={2}>
                                     <TextField
                                         label="Quantity"
                                         name="quantity"
@@ -527,7 +528,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                         required
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={2}>
+                                <Grid item xs={12} size={2}>
                                     <TextField
                                         label="Discount"
                                         name="discount"
@@ -537,7 +538,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                         fullWidth
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={2}>
+                                <Grid item xs={12} size={2}>
                                     <TextField
                                         label="Tax Rate (%)"
                                         name="taxRate"
@@ -547,15 +548,15 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                         fullWidth
                                     />
                                 </Grid>
-                                <Grid item sm={1}>
+                                <Grid item size={1}>
                                     <Typography color="error" onClick={() => handleRemoveItem(index)} sx={{my:'15px'}}>
                                         Delete
                                     </Typography>
                                 </Grid>
                             </React.Fragment>
                         ))}
-                        <Grid item xs={12}>
-                            <Button variant="contained" color="primary" onClick={addItem}>
+                        <Grid item xs={12} size={12}>
+                            <Button variant="contained" color="primary" onClick={addItem} sx={{display:'flex', justifyContent:'flex-end' ,ml:'auto',mr:'auto'}}>
                                 Add Item
                             </Button>
                         </Grid>
@@ -563,7 +564,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
 
                     {/* Signature */}
                 
-                    <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
+                    <Grid item xs={12} size={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end' }}>
                         {formData.signature ? (
                             <img src={formData.signature} alt="Signature" style={{ maxWidth: '150px', marginBottom: '16px' }} />
                         ) : (
@@ -575,7 +576,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                             <input type="file" accept="image/*" hidden onChange={handleFileChange} required/>
                         </Button>
                     </Grid>
-                    <Grid item xs={12} sx={{ pb:'20px'}}>
+                    <Grid item xs={12}  size={12} sx={{ pb:'20px'}}>
                         <Button variant="contained" color="primary" type="submit" sx={{ display: 'flex', justifySelf: 'flex-end', ml: 'auto', mr: 'auto' }}>
                             Submit Invoice
                         </Button>
