@@ -1,8 +1,12 @@
 # Invoice
 
+The first thing to do is to clone the repository:
+```sh
+$ git clone https://github.com/naveen199201/Invoice.git
+$ cd invoice
+```
 First thing to do is to install the required node modules
 ```sh
-$ cd invoice
 $ npm install
 ```
 Start the app by using the following command
