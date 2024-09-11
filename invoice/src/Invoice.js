@@ -181,7 +181,7 @@ const Invoice = () => {
                                 <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Unit Price</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Quantity</TableCell>
-                                <TableCell align="right" sx={{ fontWeight: 'bold' }}>Discount</TableCell>
+                                <TableCell align="right" sx={{ fontWeight: 'bold' }}>Discount(%)</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Net Amount</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Tax Type</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Tax Amount</TableCell>

@@ -79,7 +79,7 @@ const InvoiceFormData = ({ onAddInvoice }) => {
             const unitPrice = parseFloat(item.unitPrice) || 0;
             const quantity = parseInt(item.quantity) || 0;
             const discount = parseFloat(item.discount) || 0;
-            const netAmount = unitPrice * quantity - discount;
+            const netAmount = unitPrice * quantity - (unitPrice*discount*quantity)/100;
             const taxRate = parseFloat(item.taxRate) || 18;
             const taxType = formData.placeOfSupply === formData.placeOfDelivery ? 'CGST & SGST' : 'IGST';
             const taxAmount = taxType === 'CGST & SGST'
@@ -547,8 +547,8 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                                     />
                                 </Grid>
                                 <Grid item sm={1}>
-                                    <Typography color="error" onClick={() => handleRemoveItem(index)}>
-                                        DeleteIcon
+                                    <Typography color="error" onClick={() => handleRemoveItem(index)} sx={{my:'15px'}}>
+                                        Delete
                                     </Typography>
                                 </Grid>
                             </React.Fragment>
@@ -561,9 +561,9 @@ const InvoiceFormData = ({ onAddInvoice }) => {
                     </Grid>
 
                     {/* Signature */}
-                    <Grid item xs={12}>
-                        <Typography variant="h6" sx={{fontWeight:'bold'}}>Signature</Typography>
-                        <Button variant="contained" component="label" sx={{ mt: 2 }}>
+                    <Grid item xs={12} sx={{display:'flex', justifyContent:'end'}}>
+                        {/* <Typography variant="h6" sx={{fontWeight:'bold'}}>Signature:</Typography> */}
+                        <Button variant="contained" component="label" sx={{ mt: 2 }} >
                             Upload Signature
                             <input type="file" accept="image/*" hidden onChange={handleFileChange} />
                         </Button>
