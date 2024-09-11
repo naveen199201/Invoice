@@ -18,18 +18,17 @@ const Invoice = () => {
     const location = useLocation();
     const { id } = location.state;
     const { invoices } = location.state
-    console.log(id);
-    console.log(invoices);
+    
     const selectedInvoice = invoices.find((invoice) => invoice.invoiceNo === id);
-    console.log(selectedInvoice.invoiceNo);
+    
     let Total = 0;
+    let TotalTax=0;
     for (let index in selectedInvoice.items) {
+        TotalTax += Number(selectedInvoice.items[index].taxAmount);
         Total += Number(selectedInvoice.items[index].totalAmount);
-        console.log(Total)
     }
     const TotalInWords = toWords(Total);
     const WordsInTotal = TotalInWords.replace(/,/g, '');
-    console.log(TotalInWords);
     function capitalizeFirstLetterEveryWord(str) {
         return str.split(' ').map(word => {
             return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
@@ -39,37 +38,57 @@ const Invoice = () => {
 
     const downloadPDF = () => {
         const invoiceElement = document.getElementById('invoice');
+    
         if (!invoiceElement) {
             console.error('Invoice element not found');
             return;
         }
-        html2canvas(invoiceElement, { scale: 2 }).then((canvas) => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const imgWidth = 210; // A4 width in mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            pdf.save(`invoice_${selectedInvoice.invoiceNo}.pdf`);
-        }).catch(error => {
-            console.error('Error generating PDF:', error);
+    
+        // Ensure the image is fully loaded before rendering the canvas
+        const images = invoiceElement.getElementsByTagName('img');
+        const imagePromises = Array.from(images).map((img) => {
+            return new Promise((resolve, reject) => {
+                if (img.complete) {
+                    resolve();
+                } else {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                }
+            });
         });
+    
+        Promise.all(imagePromises)
+            .then(() => {
+                html2canvas(invoiceElement, { scale: 2, useCORS: true })
+                    .then((canvas) => {
+                        const imgData = canvas.toDataURL('image/png');
+                        const pdf = new jsPDF('p', 'mm', 'a4');
+                        const imgWidth = 210; // A4 width in mm
+                        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                        pdf.save(`invoice_${selectedInvoice.invoiceNo}.pdf`);
+                    })
+                    .catch((error) => {
+                        console.error('Error generating PDF:', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Error loading images:', error);
+            });
     };
+    
 
     return (
         <Container sx={{ backgroundColor: 'white' }}>
-            <Button variant="contained" onClick={downloadPDF} sx={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end', ml: 'auto', mr: '30px' }}>
-                Download as PDF
-            </Button>
+            
             <div id="invoice" style={{ padding: '30px' }}>
                 <Grid container spacing={2}>
-                    <Grid size={6}>
+                    <Grid size={6} sx={{marginBlock:'3%'}}>
                         <img src="/CLogo.jpg" alt="logo" height="100px" width="200px" />
                     </Grid>
-
-                    <Grid size={6} sx={{ textAlign: 'right' }}>
-                        <b>Tax Invoice/Bill of Supply/Cash Memo</b>
-                        <Typography sx={{ textAlign: 'right' }}>Original for Receipt </Typography>
+                    <Grid size={6} sx={{ textAlign: 'right', marginBlock:'4%'}}>
+                        <Typography sx={{ textAlign: 'right',fontWeight:'bold', fontSize:'1.5vw' }}>Tax Invoice/Bill of Supply/Cash Memo</Typography>
+                        <Typography sx={{ textAlign: 'right', fontSize:'1.5vw'  }}>(Original for Receipt) </Typography>
                     </Grid>
 
                     <Grid size={6}>
@@ -152,20 +171,12 @@ const Invoice = () => {
                             <Typography component="span" sx={{ fontWeight: 'bold' }}> Invoice Date: </Typography>
                             <Typography component="span">{selectedInvoice.invoiceDate}</Typography>
                         </Box>
-                        {/* <Box >
-                            <Typography component="span" sx={{ fontWeight: 'bold' }}>  Invoice Details : </Typography>
-                            <Typography component="span">{selectedInvoice.invoiceDetails}</Typography>
-                        </Box>
-                        <Box >
-                            <Typography component="span" sx={{ fontWeight: 'bold' }}> Invoice Date: </Typography>
-                            <Typography component="span">{selectedInvoice.invoiceDate}</Typography>
-                        </Box> */}
                     </Grid>
                 </Grid>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
-                            <TableRow sx={{ backgroundColor: 'grey' }}>
+                            <TableRow sx={{ backgroundColor: 'grey' ,border:'1px solid black'}}>
                                 <TableCell sx={{ fontWeight: 'bold' }}>Sl.No</TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Unit Price</TableCell>
@@ -181,15 +192,15 @@ const Invoice = () => {
                             {selectedInvoice.items.map((item, index = 0) => (
                                 <TableRow
                                     key={item.name}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    sx={{ border:'1px  solid black'}}
                                 >
-                                    <TableCell >{index + 1}</TableCell>
-                                    <TableCell >{item.description}</TableCell>
-                                    <TableCell align="right">{item.unitPrice}</TableCell>
-                                    <TableCell align="right">{item.quantity}</TableCell>
-                                    <TableCell align="right">{item.discount}</TableCell>
-                                    <TableCell align="right">{item.netAmount}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell sx={{ border:'1px  solid black'}} >{index + 1}</TableCell>
+                                    <TableCell sx={{ border:'1px  solid black'}}>{item.description}</TableCell>
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}>{item.unitPrice}</TableCell>
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}>{item.quantity}</TableCell>
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}>{item.discount}</TableCell>
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}>{item.netAmount}</TableCell>
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}>
                                         {(item.taxType === "CGST & SGST") ? (
                                             <>
                                                 CGST <br />
@@ -199,7 +210,7 @@ const Invoice = () => {
                                             <>IGST</>
                                         )}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}>
                                         {(item.taxType === "CGST & SGST") ? (
                                             <>
                                                 {item.taxAmount} <br />
@@ -209,44 +220,33 @@ const Invoice = () => {
                                             <>{item.taxAmount}</>
                                         )}
                                     </TableCell>
-                                    <TableCell align="right">{item.totalAmount}</TableCell>
+                                    <TableCell align="right" sx={{ border:'1px  solid black'}}  >{item.totalAmount}</TableCell>
                                 </TableRow>
 
                             ))}
-                            <TableRow>
-                                <TableCell colSpan={8} align="left" sx={{ fontWeight: 'bold' }}>Total:</TableCell>
-                                <TableCell align="right">{Total}</TableCell>
+                            <TableRow sx={{ border:'1px solid black'}}>
+                                <TableCell colSpan={7} align="left" sx={{ fontWeight: 'bold' ,padding:'0',fontSize:'400'}}>TOTAL:</TableCell>
+                                <TableCell align="right"sx={{fontWeight: 'bold' ,fontSize:'400', border:'1px solid black'}}>{TotalTax}</TableCell>
+                                <TableCell align="right"sx={{fontWeight: 'bold' ,fontSize:'400', border:'1px solid black'}}>{Total}</TableCell>
                             </TableRow>
-                            <TableRow>
-                                <TableCell colSpan={12} align="left" sx={{ fontSize: '20px', border: '1px 0px solid black', fontWeight: 'bold' }}>Amount in Words<br />
+                            <TableRow sx={{ border:'1px  solid black'}}>
+                                <TableCell colSpan={12} align="left" sx={{ fontSize: '20px', border: '1px  solid black', fontWeight: '600',padding:'0px' }}>Amount in Words<br />
                                     {capitalizedSentence}</TableCell>
-
                             </TableRow>
-                            <TableRow>
+                            <TableRow sx={{ border:'1px  solid black'}}>
                                 <TableCell colSpan={12} align="right" sx={{ fontSize: '20px', fontWeight: 'bold' }}>For {selectedInvoice.sellerName}:<br />
-                                    <img src={selectedInvoice.signature} alt='signature' height='50px' width='100px' /><br />
+                                    <img src={selectedInvoice.signature} alt='signature' height='50px' width='200px' style={{ border: '2px solid black', borderRadius: '4px' }}   /><br />
                                     Authorized Signatory
-
                                 </TableCell>
-
                             </TableRow>
-
-                        </TableBody>
-                        {/* <TableFooter>
-                            <TableRow>
-                                <TableCell colSpan={8} align="left" sx={{ fontWeight: 'bold' }}>Total:</TableCell>
-                                <TableCell align="right">{Total}</TableCell>
-                            </TableRow>
-                            <TableRow>
-                            <TableCell align="right">Amount in Words</TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell align="right">{capitalizedSentence}</TableCell>
-                            </TableRow>
-                        </TableFooter> */}
+                        </TableBody>    
                     </Table>
                 </TableContainer>
+                <Typography sx={{fontWeight:'200'}}>Whether tax is payable under reverse charge - {selectedInvoice.reverseCharge} </Typography>
             </div>
+            <Button variant="contained" onClick={downloadPDF} sx={{ marginBottom: '20px', display: 'flex', justifyContent: 'flex-end', ml: 'auto', mr: 'auto' }}>
+                Download as PDF
+            </Button>
         </Container>
     )
 }
